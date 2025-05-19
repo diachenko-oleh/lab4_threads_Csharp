@@ -34,23 +34,65 @@ namespace lab4_threads
         }
         private void Dinner(object obj)
         {
-            if (obj is Philosopher philosopher)
+            if (true)
             {
-                philosopher = (Philosopher)obj;
 
-                for (int i = 0; i < 5; i++)
+                if (obj is Philosopher philosopher)
                 {
-                    Console.WriteLine("Philosopher" + philosopher.Id + " думає " + (i + 1) + "-й раз");
-                    waiter.WaitOne();
-                    getFork(philosopher.rightFork);
-                    getFork(philosopher.leftFork);
+                    philosopher = (Philosopher)obj;
 
-                    Console.WriteLine("Philosopher" + philosopher.Id + " поїв " + (i + 1) + "-й раз");
-                    putFork(philosopher.leftFork);
-                    putFork(philosopher.rightFork);
-                    waiter.Release();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Console.WriteLine("Philosopher" + philosopher.Id + " думає " + (i + 1) + "-й раз");
+                        if (philosopher.Id == 4)
+                        {
+                            getFork(philosopher.leftFork);
+                            getFork(philosopher.rightFork);
+                        }
+                        else
+                        {
+                            getFork(philosopher.rightFork);
+                            getFork(philosopher.leftFork);
+                        }
+                 
+
+                        Console.WriteLine("Philosopher" + philosopher.Id + " поїв " + (i + 1) + "-й раз");
+                        if (philosopher.Id == 4)
+                        {
+                            putFork(philosopher.rightFork);
+                            putFork(philosopher.leftFork);
+                        }
+                        else
+                        {
+                            putFork(philosopher.leftFork);
+                            putFork(philosopher.rightFork);
+                        }
+                    }
                 }
             }
+            else
+            {
+                if (obj is Philosopher philosopher)
+                {
+                    philosopher = (Philosopher)obj;
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Console.WriteLine("Philosopher" + philosopher.Id + " думає " + (i + 1) + "-й раз");
+                        waiter.WaitOne();
+                        getFork(philosopher.rightFork);
+                        getFork(philosopher.leftFork);
+
+                        Console.WriteLine("Philosopher" + philosopher.Id + " поїв " + (i + 1) + "-й раз");
+                        putFork(philosopher.leftFork);
+                        putFork(philosopher.rightFork);
+                        waiter.Release();
+                    }
+                }
+
+
+            }
+            
         }
     }
 
